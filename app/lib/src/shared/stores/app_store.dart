@@ -1,13 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:listinha/src/configuration/services/configuration_service.dart';
 
 class AppStore {
-  final theme = ValueNotifier(ThemeMode.system);
+  final themeMode = ValueNotifier(ThemeMode.system);
+  final syncDate = ValueNotifier<DateTime?>(null);
+
+  final ConfigurationService _configurationService;
+
+  AppStore(this._configurationService) {
+    init();
+  }
+
+  void init() {
+    final model = _configurationService.getConfiguration();
+    syncDate.value = model.syncDate;
+    themeMode.value = _getThemeModeByName(model.themeModeName);
+  }
+
+  void save() {
+    _configurationService.saveConfiguration(
+      themeMode.value.name,
+      syncDate.value,
+    );
+  }
+
+  void deleteAll() {
+    _configurationService.deleteAll();
+  }
+
   void changeThemeMode(ThemeMode? mode) {
     if (mode != null) {
-      theme.value = mode;
+      themeMode.value = mode;
       save();
     }
   }
 
-  void save() {}
+  void setSyncDate(DateTime date) {
+    syncDate.value = date;
+    save();
+  }
+
+  ThemeMode _getThemeModeByName(String name) {
+    final themeMode =
+        ThemeMode.values.firstWhere((themeMode) => themeMode.name == name);
+    return themeMode;
+  }
 }

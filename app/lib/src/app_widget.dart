@@ -10,7 +10,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Modular.setInitialRoute('/home/');
     final appStore = context.watch<AppStore>(
-      (bind) => bind.theme,
+      (bind) => bind.themeMode,
     );
 
     return MaterialApp.router(
@@ -18,7 +18,7 @@ class AppWidget extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: appStore.theme.value,
+      themeMode: appStore.themeMode.value,
       routerDelegate: Modular.routerDelegate,
       routeInformationParser: Modular.routeInformationParser,
     );

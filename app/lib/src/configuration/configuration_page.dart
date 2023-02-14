@@ -12,8 +12,8 @@ class ConfigurationPage extends StatefulWidget {
 class _ConfigurationPageState extends State<ConfigurationPage> {
   @override
   Widget build(BuildContext context) {
-    final thememode = context.watch<AppStore>(
-      (bind) => bind.theme,
+    final appStore = context.watch<AppStore>(
+      (bind) => bind.themeMode,
     );
 
     return Scaffold(
@@ -36,20 +36,20 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
             RadioListTile(
               title: const Text('Sistema'),
               value: ThemeMode.system,
-              groupValue: thememode.theme.value,
-              onChanged: thememode.changeThemeMode,
+              groupValue: appStore.themeMode.value,
+              onChanged: appStore.changeThemeMode,
             ),
             RadioListTile(
               title: const Text('Claro'),
               value: ThemeMode.light,
-              groupValue: thememode.theme.value,
-              onChanged: thememode.changeThemeMode,
+              groupValue: appStore.themeMode.value,
+              onChanged: appStore.changeThemeMode,
             ),
             RadioListTile(
               title: const Text('Escuro'),
               value: ThemeMode.dark,
-              groupValue: thememode.theme.value,
-              onChanged: thememode.changeThemeMode,
+              groupValue: appStore.themeMode.value,
+              onChanged: appStore.changeThemeMode,
             ),
             const SizedBox(height: 30),
             Text(
@@ -58,7 +58,7 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
             ),
             const SizedBox(height: 20),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: appStore.deleteAll,
               child: const Text('Apacar cache e reniciar o app'),
             )
           ],
